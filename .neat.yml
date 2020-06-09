@@ -2,10 +2,16 @@ symlink:
   - .github/workflows/npm.yml: actions/npm.yml
   - README.md: README.tpl.md
 
+pre-run:
+  - script: |
+      // Use current dir as default for NPM package name
+      process.env.NEAT_ASK_NPM_NAME = process.cwd().match(/\/([^/]*)$/)[1]
+
 ask:
-  - id: project_name
+  - id: package_name
+    description: What is the name of your NPM package? ('name' format or '@scope/name' format)
     replace: true
-  - id: project_description
+  - id: package_description
     replace: true
   - id: author_name
     replace: true
@@ -14,6 +20,7 @@ ask:
   - id: author_website
     replace: true
   - id: repository_name
+    description: What is the name of your repository (in the format owner/repo)?
     replace: true
   - id: target_environment
     description: What environment is your package targeting?
@@ -29,15 +36,11 @@ ask:
 post-run:
   - yarn add -D @babel/cli @babel/core @babel/plugin-transform-runtime @babel/preset-env babel-eslint eslint@6.x eslint-config-prettier eslint-plugin-babel eslint-plugin-import eslint-plugin-jest eslint-plugin-node eslint-plugin-prettier jest prettier
   - script: |
-      const added_files = process.env.NEAT_ADDED_FILES
-        ? process.env.NEAT_ADDED_FILES.split(", ")
-        : [];
-      const environment = process.env.NEAT_ASK_TARGET_ENVIRONMENT
-        ? process.env.NEAT_ASK_TARGET_ENVIRONMENT
-        : "";
+      const added_files = process.env.NEAT_ADDED_FILES;
+      const environment = process.env.NEAT_ASK_TARGET_ENVIRONMENT;
 
       // Edit package.json
-      if (added_files.includes("package.json") && fs.existsSync("package.json")) {
+      if (/package\.json/i.test(added_files) && fs.existsSync("package.json")) {
         const pkg = JSON.parse(fs.readFileSync("package.json"));
 
         if (fs.existsSync("./docs")) pkg.directories.doc = "./docs";
@@ -57,7 +60,7 @@ post-run:
       }
 
       // Edit .eslintrc
-      if (added_files.includes(".eslintrc") && fs.existsSync(".eslintrc")) {
+      if (/\.eslintrc/i.test(added_files) && fs.existsSync(".eslintrc")) {
         const eslint = JSON.parse(fs.readFileSync(".eslintrc"));
 
         if (environment !== "hybrid" && environment !== "node") {
