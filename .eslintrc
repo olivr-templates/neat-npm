@@ -1,0 +1,52 @@
+{
+  "env": {
+    // https://eslint.org/docs/user-guide/configuring#specifying-environments
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
+  //"parser": "@typescript-eslint/parser",
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 6
+  },
+  "overrides": [
+    {
+      "files": ["**/src/*.js/*.ts", "**/tests/*.js/*.ts"],
+      "parser": "babel-eslint"
+    }
+  ],
+  "ignorePatterns": ["dist"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:node/recommended",
+    "plugin:jest/recommended",
+    "plugin:jest/style",
+    //"plugin:import/typescript",
+    //"plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/babel",
+    //"prettier/@typescript-eslint", //for @typescript-eslint/eslint-plugin
+    //"prettier/vue", //for eslint-plugin-vue
+    //"prettier/react", //for eslint-plugin-react
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["node"],
+  "rules": {
+    "sort-imports": 1,
+    "node/no-unsupported-features/es-syntax": 0,
+    "node/no-unsupported-features/es-builtins": 0,
+    "node/no-extraneous-import": [
+      "error",
+      {
+        "allowModules": ["@jest/globals"]
+      }
+    ]
+    // Specific to CLI
+    //"@typescript-eslint/explicit-function-return-type": "off"
+  }
+}

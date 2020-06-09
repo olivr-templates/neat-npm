@@ -1,0 +1,82 @@
+symlink:
+  - .github/workflows/npm.yml: actions/npm.yml
+  - README.md: README.tpl.md
+
+ask:
+  - id: project_name
+    replace: true
+  - id: project_description
+    replace: true
+  - id: author_name
+    replace: true
+  - id: author_email
+    replace: true
+  - id: author_website
+    replace: true
+  - id: repository_name
+    replace: true
+  - id: target_environment
+    description: What environment is your package targeting?
+    default: [node, browser, hybrid]
+  - id: npm-builds
+    description: On which operating systems do you want to test your build?
+    replace: true
+    default:
+      - ubuntu-latest: true
+      - windows-latest: true
+      - macos-latest: true
+
+post-run:
+  - yarn add -D @babel/cli @babel/core @babel/plugin-transform-runtime @babel/preset-env babel-eslint eslint@6.x eslint-config-prettier eslint-plugin-babel eslint-plugin-import eslint-plugin-jest eslint-plugin-node eslint-plugin-prettier jest prettier
+  - script: |
+      const added_files = process.env.NEAT_ADDED_FILES
+        ? process.env.NEAT_ADDED_FILES.split(", ")
+        : [];
+      const environment = process.env.NEAT_ASK_TARGET_ENVIRONMENT
+        ? process.env.NEAT_ASK_TARGET_ENVIRONMENT
+        : "";
+
+      // Edit package.json
+      if (added_files.includes("package.json") && fs.existsSync("package.json")) {
+        const pkg = JSON.parse(fs.readFileSync("package.json"));
+
+        if (fs.existsSync("./docs")) pkg.directories.doc = "./docs";
+
+        if (environment === "browser") {
+          pkg.jest.testEnvironment = "jsdom";
+          pkg.jest.testURL = "http://localhost";
+          delete pkg.devDependencies["eslint-plugin-node"];
+        } else if (environment === "hybrid") {
+          pkg.jest.projects = [
+            { displayName: "browser", testEnvironment: "jsdom" },
+            { displayName: "node", testEnvironment: "node" },
+          ];
+        }
+
+        fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2));
+      }
+
+      // Edit .eslintrc
+      if (added_files.includes(".eslintrc") && fs.existsSync(".eslintrc")) {
+        const eslint = JSON.parse(fs.readFileSync(".eslintrc"));
+
+        if (environment !== "hybrid" && environment !== "node") {
+          eslint.env.node = false;
+          eslint.extends.filter(function (v) {
+            return v !== "plugin:node/recommended";
+          });
+          eslint.plugins.filter(function (v) {
+            return v !== "node";
+          });
+          delete eslint.rules["node/no-unsupported-features/es-syntax"];
+          delete eslint.rules["node/no-unsupported-features/es-builtins"];
+          delete eslint.rules["node/no-extraneous-import"];
+        }
+
+        if (environment !== "hybrid" && environment !== "browser") {
+          eslint.env.browser = false;
+        }
+
+        fs.writeFileSync(".eslintrc", JSON.stringify(eslint, null, 2));
+      }
+  - yarn install
