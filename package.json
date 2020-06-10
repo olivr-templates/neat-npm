@@ -32,11 +32,11 @@
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.{js,ts}"
+      "src/**/*.[jt]s?(x)"
     ],
     "coverageDirectory": ".coverage",
     "testMatch": [
-      "**/tests/**/*.[jt]s?(x)"
+      "**/tests/**/*.[jt]s"
     ],
     "verbose": true,
     "testEnvironment": "node"
@@ -62,6 +62,7 @@
     "test": "jest",
     "format": "eslint . --fix",
     "build": "babel src --out-dir dist",
+    "prepack": "rm -rf dist && babel src --out-dir dist",
     "start": "babel src --watch --out-dir dist"
   }
 }
