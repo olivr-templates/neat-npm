@@ -11,7 +11,14 @@
   },
   "overrides": [
     {
-      "files": ["**/src/*.js/*.ts", "**/tests/*.js/*.ts"],
+      "files": [
+        "**/src/*.js",
+        "**/src/*.ts",
+        "**/src/*.jsx",
+        "**/src/*.tsx",
+        "**/tests/*.js",
+        "**/tests/*.ts"
+      ],
       "parser": "babel-eslint"
     }
   ],

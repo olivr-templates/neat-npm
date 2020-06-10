@@ -1,3 +1,5 @@
+ignore: yarn.lock
+
 symlink:
   - .github/workflows/npm.yml: actions/npm.yml
   - README.md: README.tpl.md
