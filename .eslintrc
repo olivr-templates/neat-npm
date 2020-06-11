@@ -1,28 +1,15 @@
 {
   "env": {
-    "es6": true,
+    "es2020": true,
     "browser": true,
     "node": true,
     "jest": true
   },
+  "ignorePatterns": ["dist/*"],
+  "parser": "babel-eslint",
   "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": 6
+    "sourceType": "module"
   },
-  "overrides": [
-    {
-      "files": [
-        "**/src/*.js",
-        "**/src/*.ts",
-        "**/src/*.jsx",
-        "**/src/*.tsx",
-        "**/tests/*.js",
-        "**/tests/*.ts"
-      ],
-      "parser": "babel-eslint"
-    }
-  ],
-  "ignorePatterns": ["dist"],
   "extends": [
     "eslint:recommended",
     "plugin:import/errors",
@@ -45,5 +32,45 @@
         "allowModules": ["@jest/globals"]
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/src/*.ts", "**/src/*.tsx", "**/tests/*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 6
+      },
+      "extends": [
+        "eslint:recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript",
+        "plugin:node/recommended",
+        "plugin:jest/recommended",
+        "plugin:jest/style",
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "prettier/babel",
+        "prettier/@typescript-eslint",
+        "plugin:prettier/recommended"
+      ],
+      "settings": {
+        "node": {
+          "tryExtensions": [".js", ".json", ".node", ".ts"]
+        }
+      },
+      "rules": {
+        "sort-imports": 1,
+        "node/no-unsupported-features/es-syntax": 0,
+        "node/no-unsupported-features/es-builtins": 0,
+        "node/no-extraneous-import": [
+          "error",
+          {
+            "allowModules": ["@jest/globals"]
+          }
+        ]
+      }
+    }
+  ]
 }

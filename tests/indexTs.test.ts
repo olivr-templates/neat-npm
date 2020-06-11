@@ -1,5 +1,7 @@
 import { describe, expect, it } from '@jest/globals'
-import { myAsyncName, myName } from '../src/index'
+import { myAsyncNameTs, myNameTs } from '../src/indexTs'
+
+let name: string
 
 /**
  * Sync
@@ -7,14 +9,14 @@ import { myAsyncName, myName } from '../src/index'
 describe('sync tests', function () {
   it('returns valid name (sync)', () => {
     expect.assertions(1)
-    const name = 'John'
-    expect(myName(name)).toMatch('John, your name is valid!')
+    name = 'John'
+    expect(myNameTs(name)).toMatch('John, your name is valid!')
   })
 
   it('throws invalid name (sync)', () => {
     expect.assertions(1)
-    const name = 'John!'
-    expect(() => myName(name)).toThrow('Your name is invalid')
+    name = 'John!'
+    expect(() => myNameTs(name)).toThrow('Your name is invalid')
   })
 })
 
@@ -24,13 +26,13 @@ describe('sync tests', function () {
 describe('async tests', function () {
   it('returns valid name (async)', async () => {
     expect.assertions(1)
-    const name = 'John'
-    expect(await myAsyncName(name)).toMatch('John, your name is valid!')
+    name = 'John'
+    expect(await myAsyncNameTs(name)).toMatch('John, your name is valid!')
   })
 
   it('throws invalid name (async)', async () => {
     expect.assertions(1)
-    const name = 'John!'
-    await expect(myAsyncName(name)).rejects.toThrow('Your name is invalid')
+    name = 'John!'
+    await expect(myAsyncNameTs(name)).rejects.toThrow('Your name is invalid')
   })
 })
