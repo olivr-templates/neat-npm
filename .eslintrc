@@ -17,9 +17,11 @@
     "plugin:node/recommended",
     "plugin:jest/recommended",
     "plugin:jest/style",
+    "plugin:prettier/recommended",
     "prettier",
     "prettier/babel",
-    "plugin:prettier/recommended"
+    "prettier/react",
+    "prettier/vue"
   ],
   "plugins": ["node"],
   "rules": {
@@ -50,10 +52,12 @@
         "plugin:jest/recommended",
         "plugin:jest/style",
         "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended",
         "prettier",
         "prettier/babel",
-        "prettier/@typescript-eslint",
-        "plugin:prettier/recommended"
+        "prettier/react",
+        "prettier/vue",
+        "prettier/@typescript-eslint"
       ],
       "settings": {
         "node": {
