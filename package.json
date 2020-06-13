@@ -1,23 +1,23 @@
 {
-  "name": "{{package_name}}",
-  "description": "{{package_description}}",
+  "name": "neat-npm",
+  "description": "neat npm repository",
   "version": "0.0.0",
   "author": {
-    "name": "{{author_name}}",
-    "email": "{{author_email}}",
-    "url": "{{author_website}}"
+    "name": "Romain Barissat",
+    "email": "romain-noreply@barissat.com",
+    "url": "https://olivr.com"
   },
   "license": "Apache-2.0",
-  "homepage": "https://github.com/{{repository_name}}",
-  "repository": "github:{{repository_name}}",
+  "homepage": "https://github.com/olivr-templates/neat-npm",
+  "repository": "https://github.com/olivr-templates/neat-npm",
   "bugs": {
-    "url": "https://github.com/{{repository_name}}/issues"
+    "url": "https://github.com/olivr-templates/neat-npm/issues"
   },
   "contributors": [
     {
-      "name": "{{author_name}}",
-      "email": "{{author_email}}",
-      "url": "{{author_website}}"
+      "name": "Romain Barissat",
+      "email": "romain-noreply@barissat.com",
+      "url": "https://olivr.com"
     }
   ],
   "directories": {
@@ -43,7 +43,18 @@
       "**/tests/**/*.[jt]s"
     ],
     "verbose": true,
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "testURL": "http://localhost",
+    "projects": [
+      {
+        "displayName": "Browser",
+        "testEnvironment": "jsdom"
+      },
+      {
+        "displayName": "Node.js",
+        "testEnvironment": "node"
+      }
+    ]
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
