@@ -9,3 +9,5 @@ export async function myAsyncNameTs(name: string): Promise<string> {
     else throw new Error('Your name is invalid')
   })
 }
+
+export default { myNameTs, myAsyncNameTs }

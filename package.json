@@ -91,8 +91,8 @@
     "type-check:watch": "yarn run type-check -- --watch",
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel src --source-maps inline --extensions '.ts,.tsx,.js,.jsx' --out-dir dist",
-    "build": "yarn run build:types && yarn run build:js",
-    "prepack": "rm -rf dist && yarn run build",
+    "build": "rm -rf dist && yarn run build:types && yarn run build:js",
+    "prepack": "yarn run build",
     "watch": "yarn run build:js -- --watch"
   },
   "dependencies": {

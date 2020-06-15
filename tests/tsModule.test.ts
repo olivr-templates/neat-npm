@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals'
-import { myAsyncNameTs, myNameTs } from '../src/indexTs'
+import { myAsyncNameTs, myNameTs } from '../src/tsModule'
 
 let name: string
 

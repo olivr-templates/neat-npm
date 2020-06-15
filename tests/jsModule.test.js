@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals'
-import { myAsyncName, myName } from '../src/indexJs'
+import { myAsyncName, myName } from '../src/jsModule'
 
 let name = 'John'
 
