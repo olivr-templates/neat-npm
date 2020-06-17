@@ -2,6 +2,8 @@ symlink:
   - .github/workflows/npm.yml: actions/npm.yml
   - README.md: README.tpl.md
 
+ignore: [actions]
+
 pre-run:
   - script: |
       // Use current dir as default for NPM package name
@@ -164,9 +166,12 @@ post-run:
         fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2));
       }
 
-      // Edit .babelrc
-      if (/\.babelrc/i.test(added_files) && fs.existsSync(".babelrc")) {
-        const babel = JSON.parse(fs.readFileSync(".babelrc"));
+      // Edit babel.config.json
+      if (
+        /babel.config.json/i.test(added_files) &&
+        fs.existsSync("babel.config.json")
+      ) {
+        const babel = JSON.parse(fs.readFileSync("babel.config.json"));
 
         if (typescript === "no") {
           let index = babel.presets.indexOf("@babel/preset-typescript");
@@ -184,7 +189,7 @@ post-run:
           if (index > -1) babel.presets.splice(index, 1);
         }
 
-        fs.writeFileSync(".babelrc", JSON.stringify(babel, null, 2));
+        fs.writeFileSync("babel.config.json", JSON.stringify(babel, null, 2));
       }
 
       // Edit .eslintrc
