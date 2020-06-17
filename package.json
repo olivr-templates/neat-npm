@@ -71,6 +71,7 @@
     "@vue/babel-preset-app": "^4.4.1",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.0.1",
+    "babel-preset-minify": "^0.5.1",
     "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-babel": "^5.3.0",
@@ -85,18 +86,20 @@
     "typescript": "^3.9.5"
   },
   "scripts": {
-    "test": "yarn run type-check && jest && eslint .",
-    "format": "eslint . --fix",
-    "type-check": "tsc --noEmit && tsc tests/*.ts --noEmit",
-    "type-check:watch": "yarn run type-check -- --watch",
-    "build:types": "tsc --emitDeclarationOnly",
+    "test": "yarn test:types && jest && eslint .",
+    "test:types": "tsc --noEmit && tsc tests/*.ts --noEmit",
+    "test:types:watch": "yarn test:types --watch",
+    "build": "rm -rf dist && yarn build:types && yarn build:js && yarn build:js:min",
     "build:js": "babel src --source-maps inline --extensions '.ts,.tsx,.js,.jsx' --out-dir dist",
-    "build": "rm -rf dist && yarn run build:types && yarn run build:js",
-    "prepack": "yarn run build",
-    "watch": "yarn run build:js -- --watch"
+    "build:js:min": "yarn build:js --out-file-extension .min.js --presets minify",
+    "build:types": "tsc --emitDeclarationOnly",
+    "prepack": "yarn build",
+    "format": "eslint . --fix",
+    "watch": "yarn build:js --watch"
   },
   "dependencies": {
     "@types/node": "^14.0.13",
+    "core-js": "3",
     "tslib": "^2.0.0"
   }
 }

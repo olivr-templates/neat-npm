@@ -1,9 +1,14 @@
 {
   "presets": [
-    "@babel/preset-env",
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry",
+        "corejs": 3
+      }
+    ],
     "@babel/preset-typescript",
-    "@babel/preset-react",
-    "@vue/babel-preset-app"
+    "@babel/preset-react"
   ],
   "plugins": [
     "@babel/proposal-class-properties",

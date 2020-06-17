@@ -10,7 +10,7 @@
     "target": "ESNEXT",
 
     /* Specify module code generation: 'None', 'CommonJS', 'AMD', 'System', 'UMD', 'ES6', 'ES2015', 'ES2020' or 'ESNext'. */
-    "module": "ES6",
+    "module": "CommonJS",
 
     /* Specifies module resolution strategy: 'node' (Node) or 'classic' (TypeScript pre 1.6) . */
     "moduleResolution": "node",
@@ -37,6 +37,7 @@
     "declaration": true,
 
     /* Generates a sourcemap for each corresponding '.d.ts' file. */
-    "declarationMap": true
+    "declarationMap": true,
+    "sourceMap": true
   }
 }

@@ -44,191 +44,202 @@ ask:
 
 post-run:
   - script: |
-      const added_files = process.env.NEAT_ADDED_FILES
-      const environment = process.env.NEAT_ASK_TARGET_ENVIRONMENT
-      const typescript = process.env.NEAT_ASK_TYPESCRIPT
-      const repository_name = process.env.NEAT_ASK_REPOSITORY_NAME
-      const package_name = process.env.NEAT_ASK_PACKAGE_NAME
-      const package_description = process.env.NEAT_ASK_PACKAGE_DESCRIPTION
-      const author_name = process.env.NEAT_ASK_AUTHOR_NAME
-      const author_email = process.env.NEAT_ASK_AUTHOR_EMAIL
-      const author_url = process.env.NEAT_ASK_AUTHOR_URL
-      const license = process.env.NEAT_ASK_LICENSE
+      const added_files = process.env.NEAT_ADDED_FILES;
+      const environment = process.env.NEAT_ASK_TARGET_ENVIRONMENT;
+      const typescript = process.env.NEAT_ASK_TYPESCRIPT;
+      const repository_name = process.env.NEAT_ASK_REPOSITORY_NAME;
+      const package_name = process.env.NEAT_ASK_PACKAGE_NAME;
+      const package_description = process.env.NEAT_ASK_PACKAGE_DESCRIPTION;
+      const author_name = process.env.NEAT_ASK_AUTHOR_NAME;
+      const author_email = process.env.NEAT_ASK_AUTHOR_EMAIL;
+      const author_url = process.env.NEAT_ASK_AUTHOR_URL;
+      const license = process.env.NEAT_ASK_LICENSE;
+
+      // Files
+      if (typescript === "yes") {
+        fs.unlinkSync("src/index.js");
+        fs.unlinkSync("tests/index.test.js");
+      } else {
+        fs.unlinkSync("tsconfig.json");
+        fs.unlinkSync("src/index.ts");
+        fs.unlinkSync("tests/index.test.ts");
+      }
 
       // Edit package.json
-      if (/package\.json/i.test(added_files) && fs.existsSync('package.json')) {
-        const pkg = JSON.parse(fs.readFileSync('package.json'))
+      if (/package\.json/i.test(added_files) && fs.existsSync("package.json")) {
+        const pkg = JSON.parse(fs.readFileSync("package.json"));
 
-        if (package_name) pkg.name = package_name
-        else delete pkg.name
+        if (package_name) pkg.name = package_name;
+        else delete pkg.name;
 
-        if (package_description) pkg.description = package_description
-        else delete pkg.description
+        if (package_description) pkg.description = package_description;
+        else delete pkg.description;
 
-        if (author_name) pkg.author.name = author_name
-        else delete pkg.author.name
+        if (author_name) pkg.author.name = author_name;
+        else delete pkg.author.name;
 
-        if (author_email) pkg.author.email = author_email
-        else delete pkg.author.email
+        if (author_email) pkg.author.email = author_email;
+        else delete pkg.author.email;
 
-        if (author_url) pkg.author.url = author_url
-        else delete pkg.author.url
+        if (author_url) pkg.author.url = author_url;
+        else delete pkg.author.url;
 
         if (!author_name && !author_email && !author_url) {
-          delete pkg.author
-          delete pkg.contributors
-        } else pkg.contributors = [pkg.author]
+          delete pkg.author;
+          delete pkg.contributors;
+        } else pkg.contributors = [pkg.author];
 
         if (repository_name) {
           pkg.repository = pkg.repository.replace(
-            'olivr-templates/neat-npm',
+            "olivr-templates/neat-npm",
             repository_name
-          )
-          pkg.homepage = pkg.repository
-          pkg.bugs.url = pkg.repository + '/issues'
+          );
+          pkg.homepage = pkg.repository;
+          pkg.bugs.url = pkg.repository + "/issues";
         } else {
-          delete pkg.repository
-          delete pkg.homepage
-          delete pkg.bugs
+          delete pkg.repository;
+          delete pkg.homepage;
+          delete pkg.bugs;
         }
 
-        if (license) pkg.license = license
+        if (license) pkg.license = license;
 
-        if (fs.existsSync('./docs')) pkg.directories.doc = './docs'
+        if (fs.existsSync("./docs")) pkg.directories.doc = "./docs";
 
         if (
           !/browser/i.test(environment) &&
           !/vue\.js/i.test(environment) &&
           !/react/i.test(environment)
         ) {
-          delete pkg.jest.testURL
-          delete pkg.jest.projects
-          pkg.jest.testEnvironment = 'node'
+          delete pkg.jest.testURL;
+          delete pkg.jest.projects;
+          pkg.jest.testEnvironment = "node";
+          delete pkg.devDependencies["babel-preset-minify"];
+          delete pkg.scripts["build:js:min"];
+          pkg.scripts["build"] = pkg.scripts["build"].replace(
+            " && yarn build:js:min",
+            ""
+          );
         }
 
         if (!/node\.js/i.test(environment)) {
-          if (pkg.jest.projects) delete pkg.jest.projects
-          pkg.jest.testEnvironment = 'jsdom'
-          delete pkg.devDependencies['eslint-plugin-node']
+          if (pkg.jest.projects) delete pkg.jest.projects;
+          pkg.jest.testEnvironment = "jsdom";
+          delete pkg.devDependencies["eslint-plugin-node"];
         }
 
         if (!/vue\.js/i.test(environment)) {
-          delete pkg.devDependencies['eslint-plugin-vue']
-          delete pkg.devDependencies['@vue/babel-preset-app']
+          delete pkg.devDependencies["eslint-plugin-vue"];
         }
 
         if (!/react/i.test(environment)) {
-          delete pkg.devDependencies['eslint-plugin-react']
-          delete pkg.devDependencies['@babel/preset-react']
+          delete pkg.devDependencies["eslint-plugin-react"];
+          delete pkg.devDependencies["@babel/preset-react"];
         }
 
-        if (typescript === 'no') {
-          fs.unlinkSync('tsconfig.json')
-          delete pkg.devDependencies['@babel/plugin-proposal-class-properties']
-          delete pkg.devDependencies['@babel/plugin-proposal-object-rest-spread']
-          delete pkg.devDependencies['@babel/preset-typescript']
-          delete pkg.devDependencies['@types/jest']
-          delete pkg.devDependencies['@typescript-eslint/eslint-plugin']
-          delete pkg.devDependencies['@typescript-eslint/parser']
-          delete pkg.devDependencies['typescript']
-          delete pkg.dependencies['@types/node']
-          delete pkg.dependencies['tslib']
-          delete pkg.scripts['type-check']
-          delete pkg.scripts['type-check:watch']
-          delete pkg.scripts['build:types']
+        if (typescript === "no") {
+          delete pkg.devDependencies["@babel/plugin-proposal-class-properties"];
+          delete pkg.devDependencies["@babel/plugin-proposal-object-rest-spread"];
+          delete pkg.devDependencies["@babel/preset-typescript"];
+          delete pkg.devDependencies["@types/jest"];
+          delete pkg.devDependencies["@typescript-eslint/eslint-plugin"];
+          delete pkg.devDependencies["@typescript-eslint/parser"];
+          delete pkg.devDependencies["typescript"];
+          delete pkg.dependencies["@types/node"];
+          delete pkg.dependencies["tslib"];
+          delete pkg.scripts["type-check"];
+          delete pkg.scripts["type-check:watch"];
+          delete pkg.scripts["build:types"];
 
-          pkg.scripts['build'] = pkg.scripts['build:js'].replace('.ts,.tsx,', '')
-          delete pkg.scripts['build:js']
+          pkg.scripts["build"] = pkg.scripts["build:js"].replace(".ts,.tsx,", "");
+          delete pkg.scripts["build:js"];
 
-          pkg.scripts['test'] = pkg.scripts['test'].replace(
-            'yarn run type-check && ',
-            ''
-          )
-          pkg.scripts['watch'] = pkg.scripts['watch'].replace('build:js', 'build')
+          pkg.scripts["test"] = pkg.scripts["test"].replace(
+            "yarn run type-check && ",
+            ""
+          );
+          pkg.scripts["watch"] = pkg.scripts["watch"].replace("build:js", "build");
         }
 
-        fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2))
+        fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2));
       }
 
       // Edit .babelrc
-      if (/\.babelrc/i.test(added_files) && fs.existsSync('.babelrc')) {
-        const babel = JSON.parse(fs.readFileSync('.babelrc'))
+      if (/\.babelrc/i.test(added_files) && fs.existsSync(".babelrc")) {
+        const babel = JSON.parse(fs.readFileSync(".babelrc"));
 
-        if (typescript === 'no') {
-          let index = babel.presets.indexOf('@babel/preset-typescript')
-          if (index > -1) babel.presets.splice(index, 1)
+        if (typescript === "no") {
+          let index = babel.presets.indexOf("@babel/preset-typescript");
+          if (index > -1) babel.presets.splice(index, 1);
 
-          index = babel.plugins.indexOf('@babel/proposal-class-properties')
-          if (index > -1) babel.plugins.splice(index, 1)
+          index = babel.plugins.indexOf("@babel/proposal-class-properties");
+          if (index > -1) babel.plugins.splice(index, 1);
 
-          index = babel.plugins.indexOf('@babel/proposal-object-rest-spread')
-          if (index > -1) babel.plugins.splice(index, 1)
-        }
-
-        if (!/vue\.js/i.test(environment)) {
-          let index = babel.presets.indexOf('@vue/babel-preset-app')
-          if (index > -1) babel.presets.splice(index, 1)
+          index = babel.plugins.indexOf("@babel/proposal-object-rest-spread");
+          if (index > -1) babel.plugins.splice(index, 1);
         }
 
         if (!/react/i.test(environment)) {
-          let index = babel.presets.indexOf('@babel/preset-react')
-          if (index > -1) babel.presets.splice(index, 1)
+          let index = babel.presets.indexOf("@babel/preset-react");
+          if (index > -1) babel.presets.splice(index, 1);
         }
 
-        fs.writeFileSync('.babelrc', JSON.stringify(babel, null, 2))
+        fs.writeFileSync(".babelrc", JSON.stringify(babel, null, 2));
       }
 
       // Edit .eslintrc
-      if (/\.eslintrc/i.test(added_files) && fs.existsSync('.eslintrc')) {
-        const eslint = JSON.parse(fs.readFileSync('.eslintrc'))
+      if (/\.eslintrc/i.test(added_files) && fs.existsSync(".eslintrc")) {
+        const eslint = JSON.parse(fs.readFileSync(".eslintrc"));
 
         if (
           !/browser/i.test(environment) &&
           !/vue\.js/i.test(environment) &&
           !/react/i.test(environment)
         ) {
-          eslint.env.browser = false
+          eslint.env.browser = false;
         }
 
         if (!/node\.js/i.test(environment)) {
-          eslint.env.node = false
+          eslint.env.node = false;
 
-          let index = eslint.extends.indexOf('plugin:node/recommended')
-          if (index > -1) eslint.extends.splice(index, 1)
-          index = eslint.overrides[0].extends.indexOf('plugin:node/recommended')
-          if (index > -1) eslint.overrides[0].extends.splice(index, 1)
+          let index = eslint.extends.indexOf("plugin:node/recommended");
+          if (index > -1) eslint.extends.splice(index, 1);
+          index = eslint.overrides[0].extends.indexOf("plugin:node/recommended");
+          if (index > -1) eslint.overrides[0].extends.splice(index, 1);
 
-          index = eslint.plugins.indexOf('node')
-          if (index > -1) eslint.extends.splice(index, 1)
+          index = eslint.plugins.indexOf("node");
+          if (index > -1) eslint.extends.splice(index, 1);
 
-          delete eslint.rules['node/no-unsupported-features/es-syntax']
-          delete eslint.rules['node/no-unsupported-features/es-builtins']
-          delete eslint.rules['node/no-extraneous-import']
-          delete eslint.overrides[0].rules['node/no-unsupported-features/es-syntax']
-          delete eslint.overrides[0].rules['node/no-unsupported-features/es-builtins']
-          delete eslint.overrides[0].rules['node/no-extraneous-import']
+          delete eslint.rules["node/no-unsupported-features/es-syntax"];
+          delete eslint.rules["node/no-unsupported-features/es-builtins"];
+          delete eslint.rules["node/no-extraneous-import"];
+          delete eslint.overrides[0].rules["node/no-unsupported-features/es-syntax"];
+          delete eslint.overrides[0].rules[
+            "node/no-unsupported-features/es-builtins"
+          ];
+          delete eslint.overrides[0].rules["node/no-extraneous-import"];
 
-          delete eslint.overrides[0].settings
+          delete eslint.overrides[0].settings;
         }
 
         if (!/vue\.js/i.test(environment)) {
-          let index = eslint.extends.indexOf('prettier/vue')
-          if (index > -1) eslint.extends.splice(index, 1)
-          index = eslint.overrides[0].extends.indexOf('prettier/vue')
-          if (index > -1) eslint.overrides[0].extends.splice(index, 1)
+          let index = eslint.extends.indexOf("prettier/vue");
+          if (index > -1) eslint.extends.splice(index, 1);
+          index = eslint.overrides[0].extends.indexOf("prettier/vue");
+          if (index > -1) eslint.overrides[0].extends.splice(index, 1);
         }
 
         if (!/react/i.test(environment)) {
-          let index = eslint.extends.indexOf('prettier/react')
-          if (index > -1) eslint.extends.splice(index, 1)
-          index = eslint.overrides[0].extends.indexOf('prettier/react')
-          if (index > -1) eslint.overrides[0].extends.splice(index, 1)
+          let index = eslint.extends.indexOf("prettier/react");
+          if (index > -1) eslint.extends.splice(index, 1);
+          index = eslint.overrides[0].extends.indexOf("prettier/react");
+          if (index > -1) eslint.overrides[0].extends.splice(index, 1);
         }
 
-        if (typescript === 'no') {
-          delete eslint.overrides
+        if (typescript === "no") {
+          delete eslint.overrides;
         }
 
-        fs.writeFileSync('.eslintrc', JSON.stringify(eslint, null, 2))
+        fs.writeFileSync(".eslintrc", JSON.stringify(eslint, null, 2));
       }
   - yarn install
