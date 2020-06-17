@@ -44,7 +44,7 @@ jobs:
         run: yarn test
 
       - name: Restore state if hard upgrade failed
-        if: steps.hardupgrade.outcome == "failure" || steps.hardtest.outcome == "failure"
+        if: steps.hardupgrade.outcome == failure || steps.hardtest.outcome == failure
         run: cp yarn.lock.bk yarn.lock && cp package.json.bk package.json
 
       - name: Create Pull Request
