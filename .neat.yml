@@ -1,5 +1,6 @@
 symlink:
-  - .github/workflows/npm.yml: actions/npm.yml
+  - .github/workflows/build-package.yml: actions/build-package.yml
+  - .github/workflows/upgrade-dependencies.yml: actions/upgrade-dependencies.yml
   - README.md: README.tpl.md
 
 ignore: [actions]
@@ -163,7 +164,7 @@ post-run:
           pkg.scripts["watch"] = pkg.scripts["watch"].replace("build:js", "build");
         }
 
-        fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2));
+        fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + '\n');
       }
 
       // Edit babel.config.json
