@@ -86,8 +86,8 @@
     "typescript": "^3.9.5"
   },
   "scripts": {
-    "test": "yarn test:types && jest && eslint .",
-    "test:types": "tsc --noEmit && tsc tests/*.ts --noEmit",
+    "test": "jest && yarn test:types && eslint .",
+    "test:types": "tsc -p tests",
     "test:types:watch": "yarn test:types --watch",
     "build": "rm -rf dist && yarn build:types && yarn build:js && yarn build:js:min",
     "build:js": "babel src --source-maps inline --extensions '.ts,.tsx,.js,.jsx' --out-dir dist",
