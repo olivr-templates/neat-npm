@@ -1,6 +1,9 @@
 *-debug.log
 *-error.log
-node_modules
 .coverage
 .DS_Store
-dist
+cjs
+esm
+iife
+node_modules
+types
