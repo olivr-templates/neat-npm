@@ -1,6 +1,7 @@
 /* http: //json.schemastore.org/tsconfig */
 {
   "include": ["src/**/*"],
+
   "compilerOptions": {
     /* Specify ECMAScript target version: 'ES3', 'ES5', 'ES6'/'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', 'ESNext' */
     "target": "ESNEXT",
@@ -10,6 +11,13 @@
 
     /* Enable all strict type-checking options. */
     "strict": true,
+
+    /**
+     * Skip type checking of declaration files.
+     * Used to disable type checking node_modules 
+     * https://github.com/microsoft/TypeScript/issues/30511
+     */
+    "skipLibCheck": true,
 
     /* Allow javascript files to be compiled. */
     "allowJs": true,

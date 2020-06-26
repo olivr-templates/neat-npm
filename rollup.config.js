@@ -12,32 +12,44 @@ import varname from 'varname'
 
 const extensions = [...DEFAULT_EXTENSIONS, '.ts', '.tsx']
 
-// Rollup plugins common to all module types
+/**
+ * ES6 & CJS modules
+ * These modules are to be consumed by Node.js projects or projects
+ * that use bundlers/compilers/transpilers and inherit node_modules dependencies
+ */
+
+// Babel configuration (extends babel.config.js)
+const babelConfig = {
+  babelHelpers: 'runtime',
+  extensions,
+  plugins: ['@babel/plugin-transform-runtime'],
+}
+
+// This config marks all declared dependencies as externals.
+// It can be tweaked to bundle some dependencies but if you do so,
+// please only bundle small dependencies that are not updated often
+const externalsConfig = {
+  packagePath: 'package.json',
+  builtins: true,
+  deps: true,
+  devDeps: true,
+  peerDeps: true,
+  optDeps: true,
+  exclude: [], // Add here the small dependencies you want to bundle
+}
+
+// Plugins common to CJS and ES6 modules
 const plugins = [
-  externals(
-    // This config marks all dependencies as externals. It can be
-    // changed to bundle dependencies instead but it is recommended
-    // to only bundle small dependencies that are not updated often
-    {
-      packagePath: 'package.json',
-      builtins: true,
-      deps: true,
-      devDeps: true,
-      peerDeps: true,
-      optDeps: true,
-    }
-  ),
-  resolve({
-    extensions,
-  }),
+  externals(externalsConfig),
+  resolve({ extensions }),
   commonjs(),
-  babel({
-    babelHelpers: 'runtime',
-    extensions,
-  }),
+  babel(babelConfig),
 ]
 
-// Generate ES6 modules (to be consumed via import)
+/**
+ * ES6 modules
+ * to be consumed via import
+ */
 const esModules = {
   input: glob.sync('src/**/*.[jt]s?(x)'),
   output: {
@@ -48,17 +60,27 @@ const esModules = {
   plugins: [
     alias({
       // File imports instead of directory imports for native Node ES6 support
-      entries: {
-        '@babel/runtime/regenerator': '@babel/runtime/regenerator/index.js',
-        '@babel/runtime/helpers/asyncToGenerator':
-          '@babel/runtime/helpers/asyncToGenerator.js',
-      },
+      // Needed until babel adds extensions itself https://github.com/babel/babel/pull/10853
+      entries: [
+        {
+          find: '@babel/runtime/regenerator',
+          replacement: '@babel/runtime/regenerator/index.js',
+        },
+        {
+          find: /(@babel\/runtime\/helpers\/.*(?<!\.js)$)/i,
+          replacement: '$1.js',
+        },
+        { find: /(core-js\/modules\/.*(?<!\.js)$)/i, replacement: '$1.js' },
+      ],
     }),
     ...plugins,
   ],
 }
 
-// Generate CommonJS modules (to be consumed via require)
+/**
+ * CommonJS modules
+ * to be consumed via require
+ */
 const cjsModules = {
   input: glob.sync('src/**/*.[jt]s?(x)'),
   output: [
@@ -71,41 +93,75 @@ const cjsModules = {
   plugins,
 }
 
-// Generate IIFE module for browser (to be consumed via <script>)
+/**
+ * IIFE modules
+ * These modules are consumed directly in the browser via <script> tag
+ * Browsers don't have automatic access to node_modules dependencies, so basically
+ * for every dependency, you have to either include it in iifeExternals or in iifeBundled
+ * Don't forget to add the external dependencies to the documentation's examples/usage
+ */
+
+// Global variables used to access external dependencies
+// These should be imported via another <script> tag
+const iifeExternals = {
+  'not-defined': 'notDefined', // This is for the 'not-defined' module used in the example src/myModule
+}
+
+// Dependencies that should be bundled (ES6 tree-shaking supported)
+const iifeBundled = ['core-js']
+
+const iifeExternalsConfig = { ...externalsConfig }
+iifeExternalsConfig.exclude = [...iifeExternalsConfig.exclude, ...iifeBundled]
+
+// Compute export name from package name
 const exportName = varname.camelback(
   pkg.name.substring(pkg.name.lastIndexOf('/') + 1)
 )
 
-const iifeModule = {
+// Babel configuration (extends babel.config.js)
+const iifeBabelConfig = {
+  babelHelpers: 'bundled',
+  extensions,
+  presets: [['@babel/preset-env', { useBuiltIns: 'usage', corejs: 3 }]],
+}
+
+/**
+ * IIFE modules
+ * to be consumed directly via one <script> tag
+ */
+const iifeModules = {
   input: {
     include: ['src/**/*.js', 'src/**/*.jsx', 'src/**/*.ts', 'src/**/*.tsx'],
-    exclude: ['src/**/index.js', 'src/**/index.ts'],
+    exclude: ['src/**/index.js', 'src/**/index.ts'], // Re-exports are not needed in a one file bundle
   },
   output: [
+    // One file bundle
     {
       file: pkg.browser,
       name: exportName,
       format: 'iife',
+      globals: iifeExternals,
       sourcemap: process.env.BUILD === 'production' ? false : true,
+      sourcemapExcludeSources: true,
     },
-  ],
-  plugins: [multi(), ...plugins],
-}
-
-// Generate minified version of IIFE module
-const iifeModuleMin = {
-  input: 'iife/index.js',
-  output: [
+    // Minified bundle
     {
       file: pkg.unpkg,
       name: exportName,
       format: 'iife',
-      sourcemap: true,
+      globals: iifeExternals,
+      sourcemap: process.env.BUILD === 'production' ? false : true,
       sourcemapExcludeSources: true,
       plugins: [terser()],
     },
   ],
-  plugins,
+  plugins: [
+    multi(),
+    externals(iifeExternalsConfig),
+    resolve({ extensions }),
+    commonjs(),
+    babel(iifeBabelConfig),
+  ],
 }
 
-export default [esModules, cjsModules, iifeModule, iifeModuleMin]
+export default [esModules, cjsModules, iifeModules]
