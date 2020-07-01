@@ -132,7 +132,7 @@ const iifeBabelConfig = {
 const iifeModules = {
   input: {
     include: ['src/**/*.js', 'src/**/*.jsx', 'src/**/*.ts', 'src/**/*.tsx'],
-    exclude: ['src/**/index.js', 'src/**/index.ts'], // Re-exports are not needed in a one file bundle
+    exclude: ['src/**/index.ts'], // Re-exports are not needed in a one file bundle
   },
   output: [
     // One file bundle
