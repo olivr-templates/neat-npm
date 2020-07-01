@@ -46,20 +46,22 @@
       "src/**/*.[jt]s?(x)"
     ],
     "coverageDirectory": ".coverage",
-    "testMatch": [
-      "**/tests/**/*.[jt]s"
-    ],
     "verbose": true,
-    "testEnvironment": "jsdom",
-    "testURL": "http://localhost",
     "projects": [
       {
         "displayName": "Browser",
-        "testEnvironment": "jsdom"
+        "testEnvironment": "jsdom",
+        "testMatch": [
+          "**/tests/**/*.[jt]s"
+        ],
+        "testURL": "http://localhost"
       },
       {
         "displayName": "Node.js",
-        "testEnvironment": "node"
+        "testEnvironment": "node",
+        "testMatch": [
+          "**/tests/**/*.[jt]s"
+        ]
       }
     ]
   },
