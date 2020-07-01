@@ -2,8 +2,5 @@
 *-error.log
 .coverage
 .DS_Store
-cjs
-esm
-iife
+dist
 node_modules
-types

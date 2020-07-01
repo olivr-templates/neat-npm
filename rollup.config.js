@@ -53,7 +53,7 @@ const plugins = [
 const esModules = {
   input: glob.sync('src/**/*.[jt]s?(x)'),
   output: {
-    dir: 'esm',
+    dir: 'dist/esm',
     format: 'esm',
     sourcemap: process.env.BUILD === 'production' ? false : true,
   },
@@ -85,7 +85,7 @@ const cjsModules = {
   input: glob.sync('src/**/*.[jt]s?(x)'),
   output: [
     {
-      dir: 'cjs',
+      dir: 'dist/cjs',
       format: 'cjs',
       sourcemap: process.env.BUILD === 'production' ? false : true,
     },

@@ -25,17 +25,14 @@
     "test": "./tests"
   },
   "files": [
-    "esm/**/*",
-    "cjs/**/*",
-    "iife/**/*",
-    "src/**/*",
-    "types/**/*"
+    "dist/**/*",
+    "src/**/*"
   ],
-  "types": "types/index.d.ts",
-  "main": "cjs/index.js",
-  "module": "esm/index.js",
-  "browser": "iife/index.js",
-  "unpkg": "iife/index.min.js",
+  "types": "dist/types/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "browser": "dist/iife/index.js",
+  "unpkg": "dist/iife/index.min.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
@@ -107,9 +104,9 @@
   },
   "scripts": {
     "build": "yarn run clean && yarn build:types && yarn build:js",
-    "build:js": "mkdir cjs esm && echo '{\"type\":\"commonjs\"}' > cjs/package.json && echo '{\"type\":\"module\"}' > esm/package.json && rollup -c rollup.config.js",
+    "build:js": "mkdir dist/cjs dist/esm && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json && echo '{\"type\":\"module\"}' > dist/esm/package.json && rollup -c rollup.config.js",
     "build:types": "tsc --emitDeclarationOnly",
-    "clean": "rm -rf esm cjs iife types .coverage",
+    "clean": "rm -rf dist .coverage",
     "format": "yarn lint --fix",
     "lint": "eslint src tests",
     "prepack": "yarn build --environment BUILD:production",
