@@ -38,7 +38,7 @@ describe('async tests', function () {
     )
   })
 
-  it('throws invalid name', async () => {
+  it('throws undefined name', async () => {
     expect.assertions(1)
     return expect(myAsyncName('')).rejects.toThrow('You need to specify a name')
   })
