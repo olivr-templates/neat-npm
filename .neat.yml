@@ -1,8 +1,9 @@
-ignore: yarn.lock
-
 symlink:
-  - .github/workflows/npm.yml: actions/npm.yml
+  - .github/workflows/build-package.yml: actions/build-package.yml
+  - .github/workflows/upgrade-dependencies.yml: actions/upgrade-dependencies.yml
   - README.md: README.tpl.md
+
+ignore: [actions]
 
 pre-run:
   - script: |
@@ -10,23 +11,16 @@ pre-run:
       process.env.NEAT_ASK_NPM_NAME = process.cwd().match(/\/([^/]*)$/)[1]
 
 ask:
-  - id: package_name
-    description: What is the name of your NPM package? ('name' format or '@scope/name' format)
-    replace: true
-  - id: package_description
-    replace: true
-  - id: author_name
-    replace: true
-  - id: author_email
-    replace: true
-  - id: author_website
-    replace: true
-  - id: repository_name
-    description: What is the name of your repository (in the format owner/repo)?
-    replace: true
   - id: target_environment
     description: What environment is your package targeting?
-    default: [node, browser, hybrid]
+    default:
+      - Node.js: true
+      - Browser: true
+      - Vue.js: false
+      - React: false
+  - id: typescript
+    description: Do you want to enable Typescript?
+    default: [yes, no]
   - id: npm-builds
     description: On which operating systems do you want to test your build?
     replace: true
@@ -34,54 +28,23 @@ ask:
       - ubuntu-latest: true
       - windows-latest: true
       - macos-latest: true
+  - id: package_name
+    description: What is the name of your NPM package? (in the format 'name' or '@scope/name')
+    replace: true
+  - id: package_description
+    replace: true
+  - id: author_name
+    replace: true
+  - id: author_email
+    replace: true
+  - id: author_url
+    replace: true
+  - id: repository_name
+    description: What is the name of your repository (in the format owner/repo)?
+    replace: true
+  - id: license
+    default: Apache-2.0
 
 post-run:
-  - yarn add -D @babel/cli @babel/core @babel/plugin-transform-runtime @babel/preset-env babel-eslint eslint@6.x eslint-config-prettier eslint-plugin-babel eslint-plugin-import eslint-plugin-jest eslint-plugin-node eslint-plugin-prettier jest prettier
-  - script: |
-      const added_files = process.env.NEAT_ADDED_FILES;
-      const environment = process.env.NEAT_ASK_TARGET_ENVIRONMENT;
-
-      // Edit package.json
-      if (/package\.json/i.test(added_files) && fs.existsSync("package.json")) {
-        const pkg = JSON.parse(fs.readFileSync("package.json"));
-
-        if (fs.existsSync("./docs")) pkg.directories.doc = "./docs";
-
-        if (environment === "browser") {
-          pkg.jest.testEnvironment = "jsdom";
-          pkg.jest.testURL = "http://localhost";
-          delete pkg.devDependencies["eslint-plugin-node"];
-        } else if (environment === "hybrid") {
-          pkg.jest.projects = [
-            { displayName: "browser", testEnvironment: "jsdom" },
-            { displayName: "node", testEnvironment: "node" },
-          ];
-        }
-
-        fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2));
-      }
-
-      // Edit .eslintrc
-      if (/\.eslintrc/i.test(added_files) && fs.existsSync(".eslintrc")) {
-        const eslint = JSON.parse(fs.readFileSync(".eslintrc"));
-
-        if (environment !== "hybrid" && environment !== "node") {
-          eslint.env.node = false;
-          eslint.extends.filter(function (v) {
-            return v !== "plugin:node/recommended";
-          });
-          eslint.plugins.filter(function (v) {
-            return v !== "node";
-          });
-          delete eslint.rules["node/no-unsupported-features/es-syntax"];
-          delete eslint.rules["node/no-unsupported-features/es-builtins"];
-          delete eslint.rules["node/no-extraneous-import"];
-        }
-
-        if (environment !== "hybrid" && environment !== "browser") {
-          eslint.env.browser = false;
-        }
-
-        fs.writeFileSync(".eslintrc", JSON.stringify(eslint, null, 2));
-      }
+  - node configure.js
   - yarn install
