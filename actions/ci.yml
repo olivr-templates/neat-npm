@@ -27,6 +27,7 @@ jobs:
     if: github.event.action != 'labeled' || github.event.label.name == 'automerge'
     strategy:
       matrix:
+        # prettier-ignore
         os: [{{npm-builds}}]
     runs-on: ${{ matrix.os }}
     steps:
