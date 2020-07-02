@@ -5,7 +5,15 @@ updates:
     schedule:
       interval: 'daily'
     versioning-strategy: widen
+    labels:
+      - npm
+      - dependencies
+      - automerge
+      - autodelete
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'daily'
+    labels:
+      - github actions
+      - dependencies

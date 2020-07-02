@@ -1,6 +1,6 @@
 symlink:
-  - .github/workflows/build-package.yml: actions/build-package.yml
-  - .github/workflows/upgrade-dependencies.yml: actions/upgrade-dependencies.yml
+  - .github/workflows/ci.yml: actions/ci.yml
+  - .github/workflows/repo-setup.yml: actions/repo-setup.yml
   - README.md: README.tpl.md
 
 ignore: [actions]
