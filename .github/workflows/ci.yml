@@ -27,7 +27,6 @@ jobs:
     if: github.event.action != 'labeled' || github.event.label.name == 'automerge'
     strategy:
       matrix:
-        # prettier-ignore
         os: [windows-latest, macos-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -136,4 +135,4 @@ jobs:
         if: contains(fromJson(steps.get-labels.outputs.result).*.name, 'automerge')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MERGE_DELETE_BRANCH: ${{ contains(fromJson(steps.get-labels.outputs.result).*.name, 'autodeletebranch') }}
+          MERGE_DELETE_BRANCH: ${{ contains(fromJson(steps.get-labels.outputs.result).*.name, 'autodelete') }}
