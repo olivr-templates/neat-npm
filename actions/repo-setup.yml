@@ -32,27 +32,11 @@ jobs:
                 )
               )
             )
-      # - name: Set topics
-      #   uses: actions/github-script@master
-      #   with:
-      #     github-token: ${{secrets.GITHUB_TOKEN}}
-      #     script: |
-      #       var topics = ['npm', 'library', 'es6', 'cjs', 'iife']
-      #       var {owner, repo} = context.repo
-      #       return github.repos.getAllTopics({
-      #         owner,
-      #         repo,
-      #       }).then((res) =>
-      #         github.repos.replaceAllTopics({
-      #           owner,
-      #           repo,
-      #           names: [...res.data.names, ...topics]
-      #         })
-      #       )
-      # - name: Remove repo setup file
-      #   uses: EndBug/add-and-commit@v4
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     remove: '.github/workflows/repo-setup.yml'
-      #     message: 'Remove repo setup file'
+
+      - name: Remove repo setup (this file)
+        uses: EndBug/add-and-commit@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          remove: '.github/workflows/repo-setup.yml'
+          message: 'Remove repo setup file'
