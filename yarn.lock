@@ -2522,9 +2522,9 @@ eslint-plugin-react@^7.20.0:
     xregexp "^4.3.0"
 
 eslint-plugin-vue@^7.0.0-alpha.6:
-  version "7.0.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-7.0.0-alpha.8.tgz#1465e05c6c074415ef3144722d6828d1ece933a6"
-  integrity sha512-wCQs9aCZJ/rOkcn5ZMn0GogpYf8lYl4cuB1uMLHNLsUOliqNuFXOu8wVwdseAMYqUMPWXuNvCUC6h1g6XM7mYw==
+  version "7.0.0-alpha.9"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-7.0.0-alpha.9.tgz#a7850e196a8ae6061ed81f47bc9143c054a53dc0"
+  integrity sha512-QJQUtogYe7CyEWPI7bLazoBFhPt1kmoq1OUUHHSc23PojbuDRchVAY7Ffa8uxvrLhoGgROVSl1o3ktyF6ydPAQ==
   dependencies:
     "@types/semver" "^7.2.0"
     eslint-utils "^2.0.0"
