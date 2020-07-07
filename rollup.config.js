@@ -104,7 +104,7 @@ const cjsModules = {
 // Global variables used to access external dependencies
 // These should be imported via another <script> tag
 const iifeExternals = {
-  'not-defined': 'notDefined', // This is for the 'not-defined' module used in the example src/myModule
+  'is-not-defined': 'isNotDefined', // This is for the 'is-not-defined' module used in the example src/myModule
 }
 
 // Dependencies that should be bundled (ES6 tree-shaking supported)
