@@ -104,8 +104,8 @@ jobs:
           path: .coverage
 
       - name: Publish code coverage stats
-        uses: codecov/codecov-action@v1.0.10
         continue-on-error: true
+        uses: codecov/codecov-action@v1.0.10
 
       - name: Publish npm package
         if: startsWith(github.ref, 'refs/tags/')
@@ -130,6 +130,7 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number
             }).then((pr) => pr.data.labels)
+
       - name: Merge pull request
         uses: pascalgn/automerge-action@v0.8.4
         if: contains(fromJson(steps.get-labels.outputs.result).*.name, 'automerge')
