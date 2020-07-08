@@ -37,30 +37,29 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "jest": {
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.[jt]s?(x)"
-    ],
-    "coverageDirectory": ".coverage",
-    "verbose": true,
-    "projects": [
-      {
-        "displayName": "Browser",
-        "testEnvironment": "jsdom",
-        "testMatch": [
-          "**/tests/**/*.[jt]s"
-        ],
-        "testURL": "http://localhost"
-      },
-      {
-        "displayName": "Node.js",
-        "testEnvironment": "node",
-        "testMatch": [
-          "**/tests/**/*.[jt]s"
-        ]
-      }
-    ]
+  "scripts": {
+    "build": "yarn run clean && yarn build:types && yarn build:js",
+    "build:js": "mkdir dist/cjs dist/esm && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json && echo '{\"type\":\"module\"}' > dist/esm/package.json && rollup -c .config/rollup.config.js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "clean": "rm -rf dist .coverage",
+    "format": "yarn lint --fix",
+    "lint": "eslint src tests",
+    "prepack": "yarn build --environment BUILD:production",
+    "test": "jest --config .config/jest.config.json && yarn test:types && yarn lint",
+    "test:types": "tsc -p tests",
+    "test:types:watch": "yarn test:types --watch",
+    "watch": "yarn run clean && yarn build:js --watch"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-customizable"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git-cz --hook || true",
+      "commit-msg": "echo $HUSKY_GIT_PARAMS && echo $HUSKY_GIT_STDIN && commitlint -E HUSKY_GIT_PARAMS --config .config/commitlint.config.js"
+    }
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
@@ -111,33 +110,9 @@
     "typescript": "^3.9.5",
     "varname": "^2.0.3"
   },
-  "scripts": {
-    "build": "yarn run clean && yarn build:types && yarn build:js",
-    "build:js": "mkdir dist/cjs dist/esm && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json && echo '{\"type\":\"module\"}' > dist/esm/package.json && rollup -c .config/rollup.config.js",
-    "build:types": "tsc --emitDeclarationOnly",
-    "clean": "rm -rf dist .coverage",
-    "format": "yarn lint --fix",
-    "lint": "eslint src tests",
-    "prepack": "yarn build --environment BUILD:production",
-    "test": "jest && yarn test:types && yarn lint",
-    "test:types": "tsc -p tests",
-    "test:types:watch": "yarn test:types --watch",
-    "watch": "yarn run clean && yarn build:js --watch"
-  },
   "dependencies": {
     "@babel/runtime": "^7.10.2",
     "@types/node": "^14.0.13",
     "is-not-defined": "^1.0.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-customizable"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && git-cz --hook || true",
-      "commit-msg": "echo $HUSKY_GIT_PARAMS && echo $HUSKY_GIT_STDIN && commitlint -E HUSKY_GIT_PARAMS --config .config/commitlint.config.js"
-    }
   }
 }
