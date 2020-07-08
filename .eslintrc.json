@@ -23,9 +23,8 @@
     "prettier/react",
     "prettier/vue"
   ],
-  "plugins": ["node", "spellcheck"],
+  "plugins": ["node"],
   "rules": {
-    "spellcheck/spell-checker": ["warn"],
     "sort-imports": 1,
     "node/no-unsupported-features/es-syntax": 0,
     "node/no-unsupported-features/es-builtins": 0,
@@ -66,7 +65,6 @@
         }
       },
       "rules": {
-        "spellcheck/spell-checker": ["warn"],
         "sort-imports": 1,
         "node/no-unsupported-features/es-syntax": 0,
         "node/no-unsupported-features/es-builtins": 0,
