@@ -1,5 +1,6 @@
 import { DEFAULT_EXTENSIONS } from '@babel/core'
 import alias from '@rollup/plugin-alias'
+import analyze from 'rollup-plugin-analyzer'
 import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
 import externals from 'rollup-plugin-node-externals'
@@ -44,6 +45,7 @@ const plugins = [
   resolve({ extensions }),
   commonjs(),
   babel(babelConfig),
+  analyze({ summaryOnly: true, hideDeps: true }),
 ]
 
 /**
@@ -161,6 +163,7 @@ const iifeModules = {
     resolve({ extensions }),
     commonjs(),
     babel(iifeBabelConfig),
+    analyze({ summaryOnly: true }),
   ],
 }
 
