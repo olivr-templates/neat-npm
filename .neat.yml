@@ -1,5 +1,6 @@
 symlink:
   - .github/workflows/ci.yml: actions/ci.yml
+  - .github/workflows/release.yml: actions/release.yml
   - .github/workflows/repo-setup.yml: actions/repo-setup.yml
   - README.md: README.tpl.md
 
