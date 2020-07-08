@@ -12,14 +12,14 @@ const author_url = process.env.NEAT_ASK_AUTHOR_URL
 const license = process.env.NEAT_ASK_LICENSE
 
 /*
-All: git checkout . && NEAT_ASK_TARGET_ENVIRONMENT='Browser, React, Vue.js, Node.js' NEAT_ASK_TYPESCRIPT='yes' NEAT_ASK_REPOSITORY_NAME='incorrupt/test-repo' NEAT_ASK_PACKAGE_NAME='neat-npm' NEAT_ASK_PACKAGE_DESCRIPTION='Test description' NEAT_ASK_AUTHOR_NAME='Romain Barissat' NEAT_ASK_AUTHOR_EMAIL='romain@barissat.com' NEAT_ASK_AUTHOR_URL='https://olivr.com' NEAT_ASK_LICENSE='Apache-2.0' NEAT_ADDED_FILES='./src/index.ts, ./src/myModule.ts, ./src/myModule.js, ./tests/myModule.test.ts, ./tests/tsconfig.json, ./.eslintrc.json, ./.prettierrc.json, ./babel.config.js, ./package.json, ./README.md, ./rollup.config.js, ./tsconfig.json, ./yarn.lock' node test.js && npx prettier --write .eslintrc.json package.json babel.config.js rollup.config.js && git status
-No typescript: git checkout . && NEAT_ASK_TARGET_ENVIRONMENT='Browser, React, Vue.js, Node.js' NEAT_ASK_TYPESCRIPT='no' NEAT_ASK_REPOSITORY_NAME='incorrupt/test-repo' NEAT_ASK_PACKAGE_NAME='neat-npm' NEAT_ASK_PACKAGE_DESCRIPTION='Test description' NEAT_ASK_AUTHOR_NAME='Romain Barissat' NEAT_ASK_AUTHOR_EMAIL='romain@barissat.com' NEAT_ASK_AUTHOR_URL='https://olivr.com' NEAT_ASK_LICENSE='Apache-2.0' NEAT_ADDED_FILES='./src/index.ts, ./src/myModule.ts, ./src/myModule.js, ./tests/myModule.test.ts, ./tests/tsconfig.json, ./.eslintrc.json, ./.prettierrc.json, ./babel.config.js, ./package.json, ./README.md, ./rollup.config.js, ./tsconfig.json, ./yarn.lock' node test.js && npx prettier --write .eslintrc.json package.json babel.config.js rollup.config.js && git status
-No node: git checkout . && NEAT_ASK_TARGET_ENVIRONMENT='Browser, React, Vue.js' NEAT_ASK_TYPESCRIPT='yes' NEAT_ASK_REPOSITORY_NAME='incorrupt/test-repo' NEAT_ASK_PACKAGE_NAME='neat-npm' NEAT_ASK_PACKAGE_DESCRIPTION='Test description' NEAT_ASK_AUTHOR_NAME='Romain Barissat' NEAT_ASK_AUTHOR_EMAIL='romain@barissat.com' NEAT_ASK_AUTHOR_URL='https://olivr.com' NEAT_ASK_LICENSE='Apache-2.0' NEAT_ADDED_FILES='./src/index.ts, ./src/myModule.ts, ./src/myModule.js, ./tests/myModule.test.ts, ./tests/tsconfig.json, ./.eslintrc.json, ./.prettierrc.json, ./babel.config.js, ./package.json, ./README.md, ./rollup.config.js, ./tsconfig.json, ./yarn.lock' node test.js && npx prettier --write .eslintrc.json package.json babel.config.js rollup.config.js && git status
-No browser: git checkout . && NEAT_ASK_TARGET_ENVIRONMENT='React, Vue.js, Node.js' NEAT_ASK_TYPESCRIPT='yes' NEAT_ASK_REPOSITORY_NAME='incorrupt/test-repo' NEAT_ASK_PACKAGE_NAME='neat-npm' NEAT_ASK_PACKAGE_DESCRIPTION='Test description' NEAT_ASK_AUTHOR_NAME='Romain Barissat' NEAT_ASK_AUTHOR_EMAIL='romain@barissat.com' NEAT_ASK_AUTHOR_URL='https://olivr.com' NEAT_ASK_LICENSE='Apache-2.0' NEAT_ADDED_FILES='./src/index.ts, ./src/myModule.ts, ./src/myModule.js, ./tests/myModule.test.ts, ./tests/tsconfig.json, ./.eslintrc.json, ./.prettierrc.json, ./babel.config.js, ./package.json, ./README.md, ./rollup.config.js, ./tsconfig.json, ./yarn.lock' node test.js && npx prettier --write .eslintrc.json package.json babel.config.js rollup.config.js && git status
-No react: git checkout . && NEAT_ASK_TARGET_ENVIRONMENT='Browser, Vue.js, Node.js' NEAT_ASK_TYPESCRIPT='yes' NEAT_ASK_REPOSITORY_NAME='incorrupt/test-repo' NEAT_ASK_PACKAGE_NAME='neat-npm' NEAT_ASK_PACKAGE_DESCRIPTION='Test description' NEAT_ASK_AUTHOR_NAME='Romain Barissat' NEAT_ASK_AUTHOR_EMAIL='romain@barissat.com' NEAT_ASK_AUTHOR_URL='https://olivr.com' NEAT_ASK_LICENSE='Apache-2.0' NEAT_ADDED_FILES='./src/index.ts, ./src/myModule.ts, ./src/myModule.js, ./tests/myModule.test.ts, ./tests/tsconfig.json, ./.eslintrc.json, ./.prettierrc.json, ./babel.config.js, ./package.json, ./README.md, ./rollup.config.js, ./tsconfig.json, ./yarn.lock' node test.js && npx prettier --write .eslintrc.json package.json babel.config.js rollup.config.js && git status
-No vue: git checkout . && NEAT_ASK_TARGET_ENVIRONMENT='Browser, React, Node.js' NEAT_ASK_TYPESCRIPT='yes' NEAT_ASK_REPOSITORY_NAME='incorrupt/test-repo' NEAT_ASK_PACKAGE_NAME='neat-npm' NEAT_ASK_PACKAGE_DESCRIPTION='Test description' NEAT_ASK_AUTHOR_NAME='Romain Barissat' NEAT_ASK_AUTHOR_EMAIL='romain@barissat.com' NEAT_ASK_AUTHOR_URL='https://olivr.com' NEAT_ASK_LICENSE='Apache-2.0' NEAT_ADDED_FILES='./src/index.ts, ./src/myModule.ts, ./src/myModule.js, ./tests/myModule.test.ts, ./tests/tsconfig.json, ./.eslintrc.json, ./.prettierrc.json, ./babel.config.js, ./package.json, ./README.md, ./rollup.config.js, ./tsconfig.json, ./yarn.lock' node test.js && npx prettier --write .eslintrc.json package.json babel.config.js rollup.config.js && git status
+All: git checkout . && NEAT_ASK_TARGET_ENVIRONMENT='Browser, React, Vue.js, Node.js' NEAT_ASK_TYPESCRIPT='yes' NEAT_ASK_REPOSITORY_NAME='incorrupt/test-repo' NEAT_ASK_PACKAGE_NAME='neat-npm' NEAT_ASK_PACKAGE_DESCRIPTION='Test description' NEAT_ASK_AUTHOR_NAME='Romain Barissat' NEAT_ASK_AUTHOR_EMAIL='romain@barissat.com' NEAT_ASK_AUTHOR_URL='https://olivr.com' NEAT_ASK_LICENSE='Apache-2.0' NEAT_ADDED_FILES='./src/index.ts, ./src/myModule.ts, ./src/myModule.js, ./tests/myModule.test.ts, ./tests/tsconfig.json, ./.eslintrc.json, ./.prettierrc.json, ./babel.config.js, ./package.json, ./README.md, ./.config/rollup.config.js, ./.config/jest.config.json, ./tsconfig.json, ./yarn.lock' node test.js && npx prettier --write .eslintrc.json package.json babel.config.js rollup.config.js && git status
+No typescript: git checkout . && NEAT_ASK_TARGET_ENVIRONMENT='Browser, React, Vue.js, Node.js' NEAT_ASK_TYPESCRIPT='no' NEAT_ASK_REPOSITORY_NAME='incorrupt/test-repo' NEAT_ASK_PACKAGE_NAME='neat-npm' NEAT_ASK_PACKAGE_DESCRIPTION='Test description' NEAT_ASK_AUTHOR_NAME='Romain Barissat' NEAT_ASK_AUTHOR_EMAIL='romain@barissat.com' NEAT_ASK_AUTHOR_URL='https://olivr.com' NEAT_ASK_LICENSE='Apache-2.0' NEAT_ADDED_FILES='./src/index.ts, ./src/myModule.ts, ./src/myModule.js, ./tests/myModule.test.ts, ./tests/tsconfig.json, ./.eslintrc.json, ./.prettierrc.json, ./babel.config.js, ./package.json, ./README.md, ./.config/rollup.config.js, ./.config/jest.config.json, ./tsconfig.json, ./yarn.lock' node test.js && npx prettier --write .eslintrc.json package.json babel.config.js rollup.config.js && git status
+No node: git checkout . && NEAT_ASK_TARGET_ENVIRONMENT='Browser, React, Vue.js' NEAT_ASK_TYPESCRIPT='yes' NEAT_ASK_REPOSITORY_NAME='incorrupt/test-repo' NEAT_ASK_PACKAGE_NAME='neat-npm' NEAT_ASK_PACKAGE_DESCRIPTION='Test description' NEAT_ASK_AUTHOR_NAME='Romain Barissat' NEAT_ASK_AUTHOR_EMAIL='romain@barissat.com' NEAT_ASK_AUTHOR_URL='https://olivr.com' NEAT_ASK_LICENSE='Apache-2.0' NEAT_ADDED_FILES='./src/index.ts, ./src/myModule.ts, ./src/myModule.js, ./tests/myModule.test.ts, ./tests/tsconfig.json, ./.eslintrc.json, ./.prettierrc.json, ./babel.config.js, ./package.json, ./README.md, ./.config/rollup.config.js, ./.config/jest.config.json, ./tsconfig.json, ./yarn.lock' node test.js && npx prettier --write .eslintrc.json package.json babel.config.js rollup.config.js && git status
+No browser: git checkout . && NEAT_ASK_TARGET_ENVIRONMENT='React, Vue.js, Node.js' NEAT_ASK_TYPESCRIPT='yes' NEAT_ASK_REPOSITORY_NAME='incorrupt/test-repo' NEAT_ASK_PACKAGE_NAME='neat-npm' NEAT_ASK_PACKAGE_DESCRIPTION='Test description' NEAT_ASK_AUTHOR_NAME='Romain Barissat' NEAT_ASK_AUTHOR_EMAIL='romain@barissat.com' NEAT_ASK_AUTHOR_URL='https://olivr.com' NEAT_ASK_LICENSE='Apache-2.0' NEAT_ADDED_FILES='./src/index.ts, ./src/myModule.ts, ./src/myModule.js, ./tests/myModule.test.ts, ./tests/tsconfig.json, ./.eslintrc.json, ./.prettierrc.json, ./babel.config.js, ./package.json, ./README.md, ./.config/rollup.config.js, ./.config/jest.config.json, ./tsconfig.json, ./yarn.lock' node test.js && npx prettier --write .eslintrc.json package.json babel.config.js rollup.config.js && git status
+No react: git checkout . && NEAT_ASK_TARGET_ENVIRONMENT='Browser, Vue.js, Node.js' NEAT_ASK_TYPESCRIPT='yes' NEAT_ASK_REPOSITORY_NAME='incorrupt/test-repo' NEAT_ASK_PACKAGE_NAME='neat-npm' NEAT_ASK_PACKAGE_DESCRIPTION='Test description' NEAT_ASK_AUTHOR_NAME='Romain Barissat' NEAT_ASK_AUTHOR_EMAIL='romain@barissat.com' NEAT_ASK_AUTHOR_URL='https://olivr.com' NEAT_ASK_LICENSE='Apache-2.0' NEAT_ADDED_FILES='./src/index.ts, ./src/myModule.ts, ./src/myModule.js, ./tests/myModule.test.ts, ./tests/tsconfig.json, ./.eslintrc.json, ./.prettierrc.json, ./babel.config.js, ./package.json, ./README.md, ./.config/rollup.config.js, ./.config/jest.config.json, ./tsconfig.json, ./yarn.lock' node test.js && npx prettier --write .eslintrc.json package.json babel.config.js rollup.config.js && git status
+No vue: git checkout . && NEAT_ASK_TARGET_ENVIRONMENT='Browser, React, Node.js' NEAT_ASK_TYPESCRIPT='yes' NEAT_ASK_REPOSITORY_NAME='incorrupt/test-repo' NEAT_ASK_PACKAGE_NAME='neat-npm' NEAT_ASK_PACKAGE_DESCRIPTION='Test description' NEAT_ASK_AUTHOR_NAME='Romain Barissat' NEAT_ASK_AUTHOR_EMAIL='romain@barissat.com' NEAT_ASK_AUTHOR_URL='https://olivr.com' NEAT_ASK_LICENSE='Apache-2.0' NEAT_ADDED_FILES='./src/index.ts, ./src/myModule.ts, ./src/myModule.js, ./tests/myModule.test.ts, ./tests/tsconfig.json, ./.eslintrc.json, ./.prettierrc.json, ./babel.config.js, ./package.json, ./README.md, ./.config/rollup.config.js, ./.config/jest.config.json, ./tsconfig.json, ./yarn.lock' node test.js && npx prettier --write .eslintrc.json package.json babel.config.js rollup.config.js && git status
 
-npx eslint babel.config.js rollup.config.js --fix 
+npx eslint babel.config.js .config/rollup.config.js --fix
 */
 
 // Files
@@ -75,10 +75,6 @@ if (/package\.json/i.test(added_files) && fs.existsSync('package.json')) {
   if (fs.existsSync('./docs')) pkg.directories.doc = './docs'
 
   if (!/node\.js/i.test(environment)) {
-    delete pkg.jest.projects
-    pkg.jest.testEnvironment = 'jsdom'
-    pkg.jest.testMatch = ['**/tests/**/*.[jt]s']
-    pkg.jest.testURL = 'http://localhost'
     delete pkg.devDependencies['eslint-plugin-node']
     delete pkg.devDependencies['@rollup/plugin-alias']
   }
@@ -88,11 +84,6 @@ if (/package\.json/i.test(added_files) && fs.existsSync('package.json')) {
     !/vue\.js/i.test(environment) &&
     !/react/i.test(environment)
   ) {
-    delete pkg.jest.testURL
-    if (pkg.jest.projects) delete pkg.jest.projects
-    pkg.jest.testEnvironment = 'node'
-    pkg.jest.testMatch = ['**/tests/**/*.[jt]s']
-    delete pkg.jest.testURL
     delete pkg.devDependencies['babel-preset-minify']
     delete pkg.devDependencies['@rollup/plugin-multi-entry']
     delete pkg.devDependencies['rollup-plugin-terser']
@@ -122,16 +113,6 @@ if (/package\.json/i.test(added_files) && fs.existsSync('package.json')) {
     delete pkg.devDependencies['@typescript-eslint/eslint-plugin']
     delete pkg.devDependencies['@typescript-eslint/parser']
     delete pkg.dependencies['@types/node']
-    pkg.jest.collectCoverageFrom = pkg.jest.collectCoverageFrom.map((v) =>
-      v.replace('[jt]s?(x)', 'js?(x)')
-    )
-    if (pkg.jest.projects)
-      pkg.jest.projects = pkg.jest.projects.map(
-        (proj) =>
-          (proj.testMatch = proj.testMatch.map((v) =>
-            v.replace('[jt]s', 'js')
-          )) && proj
-      )
     delete pkg.scripts['test:types']
     delete pkg.scripts['test:types:watch']
     pkg.scripts['test'] = pkg.scripts['test'].replace(' && yarn test:types', '')
@@ -142,12 +123,58 @@ if (/package\.json/i.test(added_files) && fs.existsSync('package.json')) {
   fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n')
 }
 
+// Edit jest.config.json
+if (
+  /jest.config.json/i.test(added_files) &&
+  fs.existsSync('.config/jest.config.json')
+) {
+  const jest = JSON.parse(fs.readFileSync('.config/jest.config.json'))
+
+  if (!/node\.js/i.test(environment)) {
+    delete jest.projects
+    jest.testEnvironment = 'jsdom'
+    jest.rootDir = './'
+    jest.testMatch = ['<rootDir>/tests/**/*.[jt]s']
+    jest.testURL = 'http://localhost'
+  }
+
+  if (
+    !/browser/i.test(environment) &&
+    !/vue\.js/i.test(environment) &&
+    !/react/i.test(environment)
+  ) {
+    delete jest.testURL
+    if (jest.projects) delete jest.projects
+    jest.testEnvironment = 'node'
+    jest.rootDir = './'
+    jest.testMatch = ['<rootDir>/tests/**/*.[jt]s']
+    delete jest.testURL
+  }
+
+  if (typescript === 'no') {
+    jest.collectCoverageFrom = jest.collectCoverageFrom.map((v) =>
+      v.replace('[jt]s?(x)', 'js?(x)')
+    )
+    if (jest.projects)
+      jest.projects = jest.projects.map(
+        (proj) =>
+          (proj.testMatch = proj.testMatch.map((v) =>
+            v.replace('[jt]s', 'js')
+          )) && proj
+      )
+    if (jest.testMatch)
+      jest.testMatch = jest.testMatch.map((v) => v.replace('[jt]s', 'js'))
+  }
+
+  fs.writeFileSync('.config/jest.config.json', jest)
+}
+
 // Edit rollup.config.js
 if (
   /rollup.config.js/i.test(added_files) &&
-  fs.existsSync('rollup.config.js')
+  fs.existsSync('.config/rollup.config.js')
 ) {
-  let rollup = fs.readFileSync('rollup.config.js', 'utf-8')
+  let rollup = fs.readFileSync('.config/rollup.config.js', 'utf-8')
 
   if (!/node\.js/i.test(environment)) {
     rollup = rollup
@@ -173,7 +200,7 @@ if (
       .replace("[...DEFAULT_EXTENSIONS, '.ts', '.tsx']", 'DEFAULT_EXTENSIONS')
   }
 
-  fs.writeFileSync('rollup.config.js', rollup)
+  fs.writeFileSync('.config/rollup.config.js', rollup)
 }
 
 // Edit babel.config.js
