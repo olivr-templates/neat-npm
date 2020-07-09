@@ -2,13 +2,7 @@ name: Build & Publish npm Package
 
 on:
   push:
-    paths-ignore:
-      - 'docs/**' # All files in the docs folder
-      - '**.md' # All markdown files
   pull_request:
-    paths-ignore:
-      - 'docs/**'
-      - '**.md'
     types:
       - labeled
       - synchronize
