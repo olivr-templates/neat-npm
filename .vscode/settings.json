@@ -8,15 +8,21 @@
     "commitlint",
     "conventionalcommits",
     "corejs",
+    "davidanson",
+    "dbaeumer",
+    "esbenp",
     "iife",
     "macos",
+    "markdownlint",
     "messsage",
     "mshick",
     "olivr",
     "pascalgn",
+    "redhat",
     "schemastore",
     "sourcemap",
     "varname",
     "wagoid"
-  ]
+  ],
+  "cSpell.ignorePaths": ["**/node_modules", "**/.git", "**/dist"]
 }
