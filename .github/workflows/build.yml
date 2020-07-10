@@ -1,9 +1,6 @@
 name: Build & test npm package
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
     types:
       - labeled
