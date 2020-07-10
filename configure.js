@@ -182,17 +182,17 @@ if (
   if (!/node\.js/i.test(environment)) {
     rollup = rollup
       .replace('builtins: true', 'builtins: false')
-      .replace(/import alias.*/gi, '')
-      .replace(/:\s+\[\s+alias[\s\S]+\.\.\.plugins,\s+\],/im, '')
+      .replace(/import alias.*/i, '')
+      .replace(/^\s+alias.*/im, '')
+      .replace(/\/{2} Convert Babel directory[\s\S]+?(?=\n\n)/im, '')
   }
 
   if (!/browser/i.test(environment)) {
     rollup = rollup
       .replace(/import (multi|pkg|{ terser }|varname).*/gi, '')
-      .replace(
-        /\/[*\s]+IIFE modules[\s\S]+$/im,
-        'export default [esModules, cjsModules]'
-      )
+      .replace(/\/[*\s\w]+IIFE[\s\S]+?(?=\/\*\*)/i, '') // Configuration specific to IIFE modules
+      .replace(/\/{2} IIFE modules[\s\S]+(?=\])/i, '')
+      .replace(/\/\*\*\n[\s\S]+?\*\//gi, '') // Delete all /** comment blocks */
   }
 
   if (typescript === 'no') {
