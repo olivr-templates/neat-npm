@@ -72,7 +72,7 @@ jobs:
 
       - name: Publish code coverage stats
         continue-on-error: true
-        uses: codecov/codecov-action@v1.0.10
+        uses: codecov/codecov-action@v1.4.0
 
   automerge:
     name: Auto Merge Pull Request
